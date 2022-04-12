@@ -17,7 +17,7 @@ contract MultiSender {
      * - `_recipients`: list of receiver's address.
      * - `_values`: list of values in wei will be sent.
      */
-    function sendETH(address[] calldata _recipients, uint256[] calldata _values) external payable {
+    function sendETH(address payable[] calldata _recipients, uint256[] calldata _values) external payable {
         require(_recipients.length == _values.length, "MultiSender: _recipients and _values not equal");
         for (uint256 i = 0; i < _recipients.length; i++) {
             (bool sent,) = _recipients[i].call{value : _values[i]}("");
@@ -37,7 +37,7 @@ contract MultiSender {
      * - `_recipients`: list of receiver's address.
      * - `_values`: list of values in wei will be sent.
      */
-    function sendERC20(address _tokenAddress, address payable[] calldata _recipients, uint256[] calldata _values) external {
+    function sendERC20(address _tokenAddress, address[] calldata _recipients, uint256[] calldata _values) external {
         require(_recipients.length == _values.length, "MultiSender: _recipients and _values not equal");
         IERC20 token = IERC20(_tokenAddress);
         for (uint256 i = 0; i < _recipients.length; i++) {
@@ -52,7 +52,7 @@ contract MultiSender {
      * - `_recipients`: list of receiver's address.
      * - `_ids`: list of NFT's ID will be sent.
      */
-    function sendERC721(address _tokenAddress, address payable[] calldata _recipients, uint256[] calldata _ids) external {
+    function sendERC721(address _tokenAddress, address[] calldata _recipients, uint256[] calldata _ids) external {
         require(_recipients.length == _ids.length, "MultiSender: _recipients and _ids not equal");
         IERC721 token = IERC721(_tokenAddress);
         for (uint256 i = 0; i < _recipients.length; i++) {
@@ -68,7 +68,7 @@ contract MultiSender {
      * - `_ids`: list of NFT's ID will be sent.
      * - `_values`: list of values corresponding to each id
      */
-    function sendERC1155(address _tokenAddress, address payable[] calldata _recipients, uint256[] calldata _ids, uint256[] calldata _values) external {
+    function sendERC1155(address _tokenAddress, address[] calldata _recipients, uint256[] calldata _ids, uint256[] calldata _values) external {
         require(_recipients.length == _values.length, "MultiSender: _recipients and _values not equal");
         require(_recipients.length == _ids.length, "MultiSender: _recipients and _ids not equal");
         IERC1155 token = IERC1155(_tokenAddress);
